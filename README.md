@@ -132,7 +132,7 @@ gsutil -m cp -r "gs://weather-ml-2024/models" .
 ## 📝 Step 7: Generate Final Report Locally
 
 Ensure the following are in the same local folder:
-- The four model result folders (from GCS or `results/`)
+- The zipped version of the four model result folders (from GCS or `results/`)
 - The `scripts/` folder containing `report_generation_final.py`
 
 ```bash
