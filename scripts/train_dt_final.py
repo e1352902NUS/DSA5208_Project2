@@ -9,14 +9,14 @@ from pyspark.ml.regression import DecisionTreeRegressor
 from pyspark.ml.tuning import CrossValidator, ParamGridBuilder
 from pyspark.ml.evaluation import RegressionEvaluator
 from pyspark.ml import Pipeline
-# The 'Default' import was removed as it causes ImportError in some environments.
+
 
 # --- Configuration ---
 LABEL_COLUMN = "TMP_C"
 FEATURE_COLUMNS = ["HOUR", "MONTH", "DAY_OF_YEAR", "LATITUDE", "LONGITUDE", "ELEVATION",
                    "WIND_DIR", "WIND_SPEED", "DEW_C", "SLP_HPA", "PRECIP_MM", "RH_PCT", "VIS_M"]
 STRING_TO_DOUBLE_COLS = ["LATITUDE", "LONGITUDE", "ELEVATION"]
-MODEL_NAME = "DecisionTree_Tuned" # Updated identifier for this model
+MODEL_NAME = "DecisionTree_Tuned"
 
 # --- Argument Parsing ---
 if len(sys.argv) != 4:
@@ -77,7 +77,7 @@ def save_metrics_to_gcs(spark, results_dict, output_path, model_name):
     print(f"[{model_name}] Saved metrics to {output_path}")
 
 
-# --- NEW UTILITY FUNCTIONS FOR ARTIFACT GENERATION ---
+# --- UTILITY FUNCTIONS FOR ARTIFACT GENERATION ---
 
 def write_cv_table(spark, cv_model, param_grid, output_path, param_names):
     """
@@ -97,7 +97,6 @@ def write_cv_table(spark, cv_model, param_grid, output_path, param_names):
             val = None
 
             # 1. Look up value by iterating over ParamMap (key is the Param object)
-            # This is the robust method used in your RF script
             for k, v in pm.items():
                 if hasattr(k, "name") and k.name == name:
                     val = v
@@ -107,7 +106,7 @@ def write_cv_table(spark, cv_model, param_grid, output_path, param_names):
             if val is None and name in pm:
                 val = pm[name]
 
-            # --- Type Handling (Kept and strengthened the explicit casting) ---
+            # --- Type Handling ---
             if val is None:
                 clean_row[name] = None
             elif name in ["maxDepth", "maxBins"]:
@@ -176,11 +175,11 @@ def write_learning_curve(spark, base_stages, model_factory, best_params, train_d
         pipeline = Pipeline(stages=pipeline_stages)
         model = pipeline.fit(subset_df)
 
-        # 2. Evaluate on the Training Subset (Simplified call, metric is already 'rmse' on evaluator)
+        # 2. Evaluate on the Training Subset
         train_predictions = model.transform(subset_df)
         train_rmse = evaluator.evaluate(train_predictions)
 
-        # 3. Evaluate on the Full Test Set (Simplified call)
+        # 3. Evaluate on the Full Test Set 
         test_predictions = model.transform(test_df)
         test_rmse = evaluator.evaluate(test_predictions)
 

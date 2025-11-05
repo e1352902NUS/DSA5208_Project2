@@ -1,5 +1,5 @@
 # ============================================================
-# train_rf.py  (Random Forest with CV logs, learning curve, FI, PLOT DATA)
+# train_rf.py
 # ============================================================
 import sys, json
 from pyspark.sql import SparkSession, Row
@@ -160,7 +160,7 @@ metrics_df.coalesce(1).write.mode("overwrite").json(metrics_out)
 print(f"[{MODEL_NAME}] Saved model to {model_out}")
 print(f"[{MODEL_NAME}] Saved metrics to {metrics_out}")
 
-# --- ADDED: Save Plot Data (Sampled Predictions vs. Actuals) ---
+# --- Save Plot Data (Sampled Predictions vs. Actuals) ---
 print(f"[{MODEL_NAME}] Saving predicted vs actual plot data...")
 plot_sample = predictions.select(F.col("prediction").alias("Predicted_Temperature_C"), F.col("label").alias("Actual_Temperature_C"))
 plot_sample.sample(withReplacement=False, fraction=0.01, seed=42).limit(100000) \

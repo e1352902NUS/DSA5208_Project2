@@ -14,7 +14,7 @@ def normalize_learning_curve_columns(df):
 
 
 
-# ----- Matplotlib color helpers (since user asked for colorful plots) -----
+# ----- Matplotlib color helpers-----
 def cmap_colors(n, cmap_name="tab20"):
     cmap = plt.get_cmap(cmap_name)
     return [cmap(i % cmap.N) for i in range(n)]
@@ -60,7 +60,7 @@ def read_first_json_under(base_dir):
     return {}
 
 def read_first_csv_under(base_dir, prefer=None):
-    # If prefer is provided (e.g., 'cv_results_csv'), try those first
+
     if prefer:
         for p in glob.glob(os.path.join(base_dir, '**', '*.csv'), recursive=True):
             if prefer in p.replace('\\','/').lower():
@@ -68,7 +68,7 @@ def read_first_csv_under(base_dir, prefer=None):
                     return pd.read_csv(p)
                 except Exception:
                     pass
-    # Fallback: any csv
+
     for p in glob.glob(os.path.join(base_dir, '**', '*.csv'), recursive=True):
         try:
             return pd.read_csv(p)
@@ -80,10 +80,10 @@ def find_predictions_df(base_dir):
     """
     Search for any CSV with columns resembling predictions & labels.
     """
-    # ----- UPDATED: Added your specific column names to the search sets -----
+
     cand_cols_pred = {'prediction', 'pred', 'predicted', 'y_pred', 'predicted_temperature_c'}
     cand_cols_true = {'label', 'target', 'y_true', 'actual', 'obs', 'temperature', 'temp', 'y', 'actual_temperature_c'}
-    # ------------------------------------------------------------------------
+
 
     for p in glob.glob(os.path.join(base_dir, '**', '*.csv'), recursive=True):
         try:
@@ -303,9 +303,7 @@ def main():
         # Read artifacts (recursive)
         metrics = read_first_json_under(out_dir) or {}
         cv_df   = read_first_csv_under(out_dir, prefer='cv_results_csv')
-        # --- Changed the preferred name to capture the learning curve CSV ---
         lc_df   = read_first_csv_under(out_dir, prefer='learning_curve')
-        # -------------------------------------------------------------------
         fi_df   = read_first_csv_under(out_dir, prefer='feature_importances_csv')
         coef_df = read_first_csv_under(out_dir, prefer='coefficients_csv')
         pred_df = find_predictions_df(out_dir) # <-- This will now find your CSV
@@ -318,7 +316,7 @@ def main():
         # Build per-model section with plots
         model_plots = []
 
-        # Learning curve (UPDATED)
+        # Learning curve
         lc_plot = plot_learning_curve(lc_df, model_name, plots_dir)
         if lc_plot: model_plots.append(lc_plot)
 
@@ -335,21 +333,16 @@ def main():
         scatter_plot, scatter_stats = plot_predictions_scatter(pred_df, model_name, plots_dir)
         if scatter_plot: model_plots.append(scatter_plot)
 
-        # --- FIX: Prioritize Scatter Metrics ---
         if scatter_stats:
-            # Overwrite the original test_rmse/test_r2 from the JSON file
-            # with the more accurate metrics calculated from the prediction CSV.
             if 'rmse_from_scatter' in scatter_stats:
                 metrics['test_rmse'] = scatter_stats['rmse_from_scatter']
             if 'r2_from_scatter' in scatter_stats:
                 metrics['test_r2'] = scatter_stats['r2_from_scatter']
 
-            # Also add the scatter keys for display in the per-model table
             metrics['scatter_rmse'] = scatter_stats.get('rmse_from_scatter')
             metrics['scatter_r2'] = scatter_stats.get('r2_from_scatter')
-        # --- END FIX ---
 
-        # Leaderboard row (now uses the potentially overwritten metrics)
+        # Leaderboard row
         leaderboard_rows.append({
             'model': model_name,
             'test_rmse': metrics.get('test_rmse', np.nan),
