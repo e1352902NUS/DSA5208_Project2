@@ -253,7 +253,7 @@ for c in numeric_cols:
 
 # --- Train/Test Split ---
 train_df, test_df = df_ml.randomSplit([0.7, 0.3], seed=42)
-output_dir = "output"
+output_dir = "data"
 
 # --- Write as single parquet files ---
 train_df.coalesce(1).write.mode("overwrite").parquet(f"{output_dir}/train_tmp")
@@ -267,7 +267,7 @@ shutil.move(test_part, f"{output_dir}/test.parquet")
 shutil.rmtree(f"{output_dir}/train_tmp")
 shutil.rmtree(f"{output_dir}/test_tmp")
 
-log.info("✅ Preprocessing complete — single train/test parquet files saved in 'output/'")
+log.info("✅ Preprocessing complete — single train/test parquet files saved in 'data/'")
 log.info(f"   Train count: {train_df.count():,} | Test count: {test_df.count():,}")
 
 
