@@ -1,0 +1,1 @@
+{"model_name":"GBT_Tuned","test_rmse":1.2067505388864683,"test_r2":0.9885870026723846,"best_hyperparameters":"{\"maxDepth\": 6, \"maxIter\": 50}"}

@@ -1,0 +1,115 @@
+<html><head><meta charset="utf-8"><title>Assignment Report</title><style>body{font-family:system-ui,Segoe UI,Roboto,Arial} img{max-width:900px}</style></head><body><h1>Model Comparison Report</h1><h2>Leaderboard</h2><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>model</th>
+      <th>test_rmse</th>
+      <th>test_r2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>DecisionTree_Tuned</td>
+      <td>1.9104</td>
+      <td>0.9718</td>
+    </tr>
+    <tr>
+      <td>GBT_Tuned</td>
+      <td>1.2335</td>
+      <td>0.9882</td>
+    </tr>
+    <tr>
+      <td>LinearRegression_Tuned</td>
+      <td>1.5412</td>
+      <td>0.9816</td>
+    </tr>
+    <tr>
+      <td>RandomForest_Tuned</td>
+      <td>1.1744</td>
+      <td>0.9893</td>
+    </tr>
+  </tbody>
+</table><h3>RMSE Comparison</h3><img src='plots/leaderboard_rmse.png'><h3>R² Comparison</h3><img src='plots/leaderboard_r2.png'><hr><h2>DecisionTree_Tuned</h2><h3>Metrics</h3><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>model_name</th>
+      <th>test_rmse</th>
+      <th>test_r2</th>
+      <th>best_hyperparameters</th>
+      <th>scatter_rmse</th>
+      <th>scatter_r2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>DecisionTree_Tuned</td>
+      <td>1.9104</td>
+      <td>0.9718</td>
+      <td>{}</td>
+      <td>1.9104</td>
+      <td>0.9718</td>
+    </tr>
+  </tbody>
+</table><h3>Plots</h3><ul><li>Learning Curve (Train/Test RMSE)<br><img src='plots\DecisionTree_Tuned_learning_curve_train_test.png'></li><li>Validation Curve: maxBins<br><img src='plots\DecisionTree_Tuned_valcurve_maxBins.png'></li><li>Validation Curve: maxDepth<br><img src='plots\DecisionTree_Tuned_valcurve_maxDepth.png'></li><li>Feature Importance<br><img src='plots\DecisionTree_Tuned_feature_importance.png'></li><li>Predicted vs Actual<br><img src='plots\DecisionTree_Tuned_pred_vs_actual.png'></li></ul><hr><h2>GBT_Tuned</h2><h3>Metrics</h3><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>model_name</th>
+      <th>test_rmse</th>
+      <th>test_r2</th>
+      <th>best_hyperparameters</th>
+      <th>scatter_rmse</th>
+      <th>scatter_r2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GBT_Tuned</td>
+      <td>1.2335</td>
+      <td>0.9882</td>
+      <td>{"maxDepth": 6, "maxIter": 50}</td>
+      <td>1.2335</td>
+      <td>0.9882</td>
+    </tr>
+  </tbody>
+</table><h3>Plots</h3><ul><li>Learning Curve (Test/Validation RMSE)<br><img src='plots\GBT_Tuned_learning_curve.png'></li><li>Validation Curve: maxDepth<br><img src='plots\GBT_Tuned_valcurve_maxDepth.png'></li><li>Validation Curve: maxIter<br><img src='plots\GBT_Tuned_valcurve_maxIter.png'></li><li>Feature Importance<br><img src='plots\GBT_Tuned_feature_importance.png'></li><li>Predicted vs Actual<br><img src='plots\GBT_Tuned_pred_vs_actual.png'></li></ul><hr><h2>LinearRegression_Tuned</h2><h3>Metrics</h3><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>model_name</th>
+      <th>test_rmse</th>
+      <th>test_r2</th>
+      <th>best_hyperparameters</th>
+      <th>scatter_rmse</th>
+      <th>scatter_r2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>LinearRegression_Tuned</td>
+      <td>1.5412</td>
+      <td>0.9816</td>
+      <td>{"regParam": 0.0, "elasticNetParam": 0.0}</td>
+      <td>1.5412</td>
+      <td>0.9816</td>
+    </tr>
+  </tbody>
+</table><h3>Plots</h3><ul><li>Learning Curve (Test/Validation RMSE)<br><img src='plots\LinearRegression_Tuned_learning_curve.png'></li><li>Validation Curve: elasticNetParam<br><img src='plots\LinearRegression_Tuned_valcurve_elasticNetParam.png'></li><li>Validation Curve: regParam<br><img src='plots\LinearRegression_Tuned_valcurve_regParam.png'></li><li>Coefficients<br><img src='plots\LinearRegression_Tuned_coefficients.png'></li><li>Predicted vs Actual<br><img src='plots\LinearRegression_Tuned_pred_vs_actual.png'></li></ul><hr><h2>RandomForest_Tuned</h2><h3>Metrics</h3><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>model_name</th>
+      <th>test_rmse</th>
+      <th>test_r2</th>
+      <th>best_hyperparameters</th>
+      <th>scatter_rmse</th>
+      <th>scatter_r2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>RandomForest_Tuned</td>
+      <td>1.1744</td>
+      <td>0.9893</td>
+      <td>{"maxDepth": 12, "numTrees": 50}</td>
+      <td>1.1744</td>
+      <td>0.9893</td>
+    </tr>
+  </tbody>
+</table><h3>Plots</h3><ul><li>Learning Curve (Test/Validation RMSE)<br><img src='plots\RandomForest_Tuned_learning_curve.png'></li><li>Validation Curve: maxDepth<br><img src='plots\RandomForest_Tuned_valcurve_maxDepth.png'></li><li>Validation Curve: numTrees<br><img src='plots\RandomForest_Tuned_valcurve_numTrees.png'></li><li>Feature Importance<br><img src='plots\RandomForest_Tuned_feature_importance.png'></li><li>Predicted vs Actual<br><img src='plots\RandomForest_Tuned_pred_vs_actual.png'></li></ul></body></html>

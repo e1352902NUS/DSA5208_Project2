@@ -1,0 +1,1 @@
+{"model_name":"RandomForest_Tuned","test_rmse":1.1625796277272367,"test_r2":0.9894072156842733,"best_hyperparameters":"{\"maxDepth\": 12, \"numTrees\": 50}"}
